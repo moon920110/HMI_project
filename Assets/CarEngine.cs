@@ -18,8 +18,8 @@ public class CarEngine : MonoBehaviour
 
     private List<Transform> nodes;
     private int currentNode = 0;
-    
-    
+
+
     // Start is called before the first frame update
     void Start()
     {
