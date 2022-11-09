@@ -64,7 +64,7 @@ public class CarEngine : MonoBehaviour
         // TODO: brake implementation
         float throttle = (gasInput - brakeInput * 3f) * maxSpeed ;
 
-        if (currentSpeed == 0f)
+        if (currentSpeed == 0f && throttle < 0)
         {
             throttle = 0f;
         }
