@@ -70,4 +70,10 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+<<<<<<< HEAD
 /Assets/RealisticCars_HD/RealisticCar02_HD/Textures/Car02_Interior_Psd.psd
+=======
+
+**/*.unity
+![As]ssets/Demo2.unity
+>>>>>>> ff3d379ab173faf0830611e6ea2511bed7510059
