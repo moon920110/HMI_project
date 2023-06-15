@@ -33,7 +33,7 @@ public class EnvManager : MonoBehaviour
         MoveCar();
 
         // for debug
-        player.position = new Vector3(player.position.x - 0.1f, player.position.y, player.position.z);
+        // player.position = new Vector3(player.position.x - 0.1f, player.position.y, player.position.z);
     }
 
     int CurrentIndex

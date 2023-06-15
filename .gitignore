@@ -73,3 +73,5 @@ crashlytics-build.properties
 
 **/*.unity
 ![As]ssets/Demo2.unity
+
+/.idea/
