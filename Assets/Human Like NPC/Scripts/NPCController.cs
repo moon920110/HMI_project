@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class NPCController : MonoBehaviour
 {
-    public Transform[] nodes;
+    public List<Transform> nodes;
     private Vector3 initPos;
+    private Quaternion initRot;
     private int prevIdx = 0;
 
     private CustomCarAI carAI;
@@ -17,6 +18,7 @@ public class NPCController : MonoBehaviour
         carAI = GetComponent<CustomCarAI>();
         initMaxRPM = carAI.MaxRPM;
         initPos = transform.position;
+        initRot = transform.rotation;
 
         DriveToNextPoint();
     }
@@ -34,7 +36,7 @@ public class NPCController : MonoBehaviour
         {
             int nearestIndex = -1;
             float nearestDistance = Mathf.Infinity;
-            for (int i = 0; i < nodes.Length; i++)
+            for (int i = 0; i < nodes.Count; i++)
             {
                 float distance = Vector3.Distance(nodes[i].position, transform.position);
                 if (distance < nearestDistance)
@@ -50,14 +52,14 @@ public class NPCController : MonoBehaviour
 
     void DriveToNextPoint()
     {
-        carAI.CustomDestination = nodes[(CurrentIndex + 1) % nodes.Length];
+        carAI.CustomDestination = nodes[(CurrentIndex + 1) % nodes.Count];
     }
 
     void KeepDistance()
     {
         // raycast
         Vector3 source = transform.position;
-        source.y = 0.5f;
+        source.y += 0.5f;
         Ray ray = new Ray(source, transform.forward);
         RaycastHit hit;
 
@@ -72,7 +74,7 @@ public class NPCController : MonoBehaviour
             }
             else if (distance <= 8f)
             {
-                carAI.MaxRPM = Mathf.Max(carAI.MaxRPM - 1, initMaxRPM - 5);
+                carAI.MaxRPM = Mathf.Max(carAI.MaxRPM - (int)(9f - distance), initMaxRPM / (int)(9f - distance));
             }
             else
             {
@@ -85,11 +87,9 @@ public class NPCController : MonoBehaviour
     {
         gameObject.SetActive(false);
 
-        // reset posistion
-        transform.position = new Vector3(player.x + 60f,  0, initPos.z);
-
-        // reset rotation
-        transform.rotation = Quaternion.Euler(0, -90, 0);
+        // reset transform
+        transform.position = initPos;
+        transform.rotation = initRot;
 
         // clear waypoints
         carAI.waypoints.Clear();
@@ -104,16 +104,16 @@ public class NPCController : MonoBehaviour
     {
         // node
         Gizmos.color = Color.yellow;
-        for (int i = 0; i < nodes.Length; i++)
+        for (int i = 0; i < nodes.Count; i++)
         {
             Gizmos.DrawWireSphere(nodes[i].position, 1f);
         }
 
         // raycast
         Vector3 source = transform.position;
-        source.y = 0.5f;
+        source.y += 0.5f;
 
         Gizmos.color = Color.red;
-        Gizmos.DrawRay(source, transform.forward * 20f);
+        Gizmos.DrawRay(source, transform.forward * 8f);
     }
 }
